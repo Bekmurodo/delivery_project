@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String(70), unique=True)
     password = Column(Text, nullable=True)
     is_staff = Column(Boolean, default=False)
-    is_active = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
     orders = relationship('Order', back_populates='user')
 
     def __repr__(self):
