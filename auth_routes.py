@@ -2,6 +2,7 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from database import session, engine
+from sqlalchemy import or_
 from models import User
 from schemas import SignUpModel, LoginModel
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -61,7 +62,16 @@ async def signup(user: SignUpModel):
 @auth_router.post('/login', status_code=status.HTTP_200_OK)
 async def login(user:LoginModel, Authorize: AuthJWT=Depends()):
 
-    db_user = session.query(User).filter(User.username == user.username).first()
+    #db_user = session.query(User).filter(User.username == user.username).first()
+
+    #query with email or username
+    db_user = session.query(User).filter(
+        or_(
+            User.username == user.username_or_email,
+            User.email == user.username_or_email
+        )
+    ).first()
+
 
     if db_user and check_password_hash(db_user.password, user.password):
         access_token = Authorize.create_access_token(subject=db_user.username)
