@@ -17,4 +17,4 @@ app.include_router(auth_router)
 
 @app.get('/')
 async def root():
-    return {"message": "This is a main page."}
+    return {"message": "This is a main page. And here will be all orders."}
