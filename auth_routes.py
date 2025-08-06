@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from database import session, engine
 from sqlalchemy import or_
 from models import User
-from schemas import SignUpModel, LoginModel
+from schemas import SignUpModel,LoginModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from fastapi_jwt_auth import AuthJWT
 
@@ -62,7 +62,6 @@ async def signup(user: SignUpModel):
 @auth_router.post('/login', status_code=status.HTTP_200_OK)
 async def login(user:LoginModel, Authorize: AuthJWT=Depends()):
 
-    #db_user = session.query(User).filter(User.username == user.username).first()
 
     #query with email or username
     db_user = session.query(User).filter(
