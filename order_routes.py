@@ -6,4 +6,4 @@ order_router = APIRouter(
 
 @order_router.get('/')
 async def order():
-    return {'message': 'This is a order page.'}
+    return {'message': 'This is a order page. And here will be all orders.'}
